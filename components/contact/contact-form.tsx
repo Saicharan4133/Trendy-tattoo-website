@@ -6,9 +6,8 @@ import { Loader2 } from 'lucide-react'
 import { siteConfig, whatsappHref } from '@/lib/site-config'
 
 type Status = 'idle' | 'loading' | 'success' | 'error'
-type Errors = Partial<Record<'name' | 'phone' | 'email' | 'message' | 'service' | 'studio', string>>
+type Errors = Partial<Record<'name' | 'phone' | 'service', string>>
 
-const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const phonePattern = /^[+\d][\d\s-]{6,16}$/
 
 function enquiryMessage(data: FormData) {
@@ -32,19 +31,12 @@ export function ContactForm() {
     const next: Errors = {}
     const name = String(data.get('from_name') || '').trim()
     const phone = String(data.get('phone') || '').trim()
-    const email = String(data.get('from_email') || '').trim()
-    const message = String(data.get('message') || '').trim()
     const service = String(data.get('service') || '').trim()
-    const studio = String(data.get('preferred_studio') || '').trim()
 
+    if (!service) next.service = 'Please choose a service.'
     if (!name) next.name = 'Please enter your name.'
     if (!phone) next.phone = 'Please enter your phone number.'
     else if (!phonePattern.test(phone)) next.phone = 'Please enter a valid phone number.'
-    if (!email) next.email = 'Please enter your email.'
-    else if (!emailPattern.test(email)) next.email = 'Please enter a valid email address.'
-    if (!message) next.message = 'Please tell us a little about your idea.'
-    if (!service) next.service = 'Please choose a service.'
-    if (!studio) next.studio = 'Please choose a preferred studio.'
 
     return next
   }
@@ -100,24 +92,6 @@ export function ContactForm() {
       </div>
 
       <div>
-        <label htmlFor="from_name" className={labelClass}>Name</label>
-        <input id="from_name" name="from_name" type="text" autoComplete="name" aria-invalid={Boolean(errors.name)} aria-describedby={errors.name ? 'from_name-error' : undefined} className={inputClass} />
-        {errors.name && <p id="from_name-error" className="mt-1 text-sm text-destructive">{errors.name}</p>}
-      </div>
-
-      <div>
-        <label htmlFor="phone" className={labelClass}>Phone Number</label>
-        <input id="phone" name="phone" type="tel" autoComplete="tel" aria-invalid={Boolean(errors.phone)} aria-describedby={errors.phone ? 'phone-error' : undefined} className={inputClass} />
-        {errors.phone && <p id="phone-error" className="mt-1 text-sm text-destructive">{errors.phone}</p>}
-      </div>
-
-      <div>
-        <label htmlFor="from_email" className={labelClass}>Email</label>
-        <input id="from_email" name="from_email" type="email" autoComplete="email" aria-invalid={Boolean(errors.email)} aria-describedby={errors.email ? 'from_email-error' : undefined} className={inputClass} />
-        {errors.email && <p id="from_email-error" className="mt-1 text-sm text-destructive">{errors.email}</p>}
-      </div>
-
-      <div>
         <label htmlFor="service" className={labelClass}>Service</label>
         <select id="service" name="service" defaultValue="" required aria-invalid={Boolean(errors.service)} aria-describedby={errors.service ? 'service-error' : undefined} className={`${inputClass} contact-form-select`}>
           <option value="" disabled>Select a service</option>
@@ -127,18 +101,15 @@ export function ContactForm() {
       </div>
 
       <div>
-        <label htmlFor="preferred_studio" className={labelClass}>Preferred studio</label>
-        <select id="preferred_studio" name="preferred_studio" defaultValue="" required aria-invalid={Boolean(errors.studio)} aria-describedby={errors.studio ? 'studio-error' : undefined} className={`${inputClass} contact-form-select`}>
-          <option value="" disabled>Select a Vijayawada studio</option>
-          {siteConfig.locations.map((location) => <option key={location.slug} value={location.neighborhood}>{location.neighborhood}</option>)}
-        </select>
-        {errors.studio && <p id="studio-error" className="mt-1 text-sm text-destructive">{errors.studio}</p>}
+        <label htmlFor="from_name" className={labelClass}>Name</label>
+        <input id="from_name" name="from_name" type="text" autoComplete="name" aria-invalid={Boolean(errors.name)} aria-describedby={errors.name ? 'from_name-error' : undefined} className={inputClass} />
+        {errors.name && <p id="from_name-error" className="mt-1 text-sm text-destructive">{errors.name}</p>}
       </div>
 
       <div>
-        <label htmlFor="message" className={labelClass}>Tell us about your idea</label>
-        <textarea id="message" name="message" rows={4} aria-invalid={Boolean(errors.message)} aria-describedby={errors.message ? 'message-error' : undefined} className={`${inputClass} resize-none`} />
-        {errors.message && <p id="message-error" className="mt-1 text-sm text-destructive">{errors.message}</p>}
+        <label htmlFor="phone" className={labelClass}>Phone Number</label>
+        <input id="phone" name="phone" type="tel" autoComplete="tel" aria-invalid={Boolean(errors.phone)} aria-describedby={errors.phone ? 'phone-error' : undefined} className={inputClass} />
+        {errors.phone && <p id="phone-error" className="mt-1 text-sm text-destructive">{errors.phone}</p>}
       </div>
 
       <button type="submit" disabled={status === 'loading'} className="micro-label mt-2 flex items-center justify-center gap-2 rounded-full border border-gold bg-gold px-8 py-4 text-[#0a0a0a] transition-transform hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-70">
