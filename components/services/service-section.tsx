@@ -74,7 +74,7 @@ export function ServiceSection({
             <Link
               href={`/contact?service=${encodeURIComponent(service.slug)}`}
               data-cursor="interactive"
-              className="micro-label mt-8 inline-flex items-center gap-2 text-bone/80 transition-colors hover:text-gold"
+              className="action-highlight micro-label mt-8 inline-flex items-center gap-2 rounded-full border border-gold bg-gold px-6 py-3 text-[#0a0a0a] transition-transform hover:scale-[1.03] active:scale-95"
             >
               BOOK NOW <span aria-hidden="true">→</span>
             </Link>

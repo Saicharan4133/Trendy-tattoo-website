@@ -124,7 +124,7 @@ export function ContactForm() {
         {errors.phone && <p id="phone-error" className="mt-1 text-sm text-destructive">{errors.phone}</p>}
       </div>
 
-      <button type="submit" disabled={status === 'loading'} className="micro-label mt-2 flex items-center justify-center gap-2 rounded-full border border-gold bg-gold px-8 py-4 text-[#0a0a0a] transition-transform hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-70">
+      <button type="submit" disabled={status === 'loading'} className="action-highlight micro-label mt-2 flex items-center justify-center gap-2 rounded-full border border-gold bg-gold px-8 py-4 text-[#0a0a0a] transition-transform hover:scale-[1.03] active:scale-95 disabled:cursor-not-allowed disabled:opacity-70">
         {status === 'loading' && <Loader2 className="h-4 w-4 animate-spin" />}
         SEND ENQUIRY
       </button>
