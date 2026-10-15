@@ -48,7 +48,7 @@ export function ServiceSection({
           >
             <Image
               src={service.image}
-              alt={`${service.title} — Rathnam Tattoos Studio, Vijayawada`}
+              alt={`${service.title} — Trendy Tattoo & Piercing Studio, Vijayawada`}
               fill
               priority={index === 0}
               className="object-cover"
