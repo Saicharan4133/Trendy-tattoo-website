@@ -56,6 +56,18 @@ export const siteConfig = {
   fixedSitemapDate: '2026-10-15',
 } as const
 
+export function absoluteUrl(path: string): string {
+  return new URL(path, siteConfig.url).toString()
+}
+
+export function whatsappHref(message = siteConfig.whatsappMessage): string {
+  return `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(message)}`
+}
+
+export function studioEntityId(slug: string): string {
+  return `${absoluteUrl(`/studios/${slug}`)}#studio`
+}
+
 const galleryFiles = ['1 (1).webp','1 (10).webp','1 (11).webp','1 (12).webp','1 (2).webp','1 (3).webp','1 (4).webp','1 (5).webp','1 (6).webp','1 (7).webp','1 (8).webp','1 (9).webp','100 (10).webp','100 (11).webp','100 (12).webp','100 (13).webp','100 (7).webp','100 (8).webp','100 (9).webp','200 (1).webp','200 (2).webp','200 (3).webp','200 (4).webp','300 (1).webp','300 (2).webp','300 (3).webp','300 (4).webp','300 (5).webp']
 export const galleryImages = galleryFiles.map((file, index) => ({ id: index + 1, fullSrc: `/images/trendy/gallery/${file}`, src: `/images/trendy/gallery/${file}`, alt: `Portfolio work ${index + 1} — ${siteConfig.name}, ${siteConfig.city}.` }))
 export const services = siteConfig.services
