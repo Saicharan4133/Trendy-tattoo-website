@@ -24,6 +24,8 @@ export function SmoothScrollProvider({ children }: { children: ReactNode }) {
   const pathname = usePathname()
 
   useEffect(() => {
+    window.history.scrollRestoration = 'manual'
+
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (prefersReduced) return
 
