@@ -1,11 +1,11 @@
 'use client'
 
 import Image from 'next/image'
+import Link from 'next/link'
 import { m } from 'framer-motion'
 import type { services } from '@/lib/site-config'
 import { ImageMarquee, type MarqueeImage } from '@/components/shared/image-marquee'
 import { PreloadTrigger } from '@/components/shared/preload-trigger'
-import { whatsappHref } from '@/lib/site-config'
 
 type Service = (typeof services)[number]
 
@@ -71,15 +71,13 @@ export function ServiceSection({
             </h2>
             <p className="mt-5 max-w-md text-base text-bone/70 md:text-lg">{service.description}</p>
             {service.extra && <p className="mt-3 max-w-md text-sm text-bone/50">{service.extra}</p>}
-            <a
-              href={whatsappHref()}
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              href={`/contact?service=${encodeURIComponent(service.slug)}`}
               data-cursor="interactive"
               className="micro-label mt-8 inline-flex items-center gap-2 text-bone/80 transition-colors hover:text-gold"
             >
-              EXPLORE SERVICE <span aria-hidden="true">→</span>
-            </a>
+              BOOK NOW <span aria-hidden="true">→</span>
+            </Link>
           </m.div>
         </div>
       </div>

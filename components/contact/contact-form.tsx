@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState, type FormEvent } from 'react'
+import { useEffect, useRef, useState, type FormEvent } from 'react'
 import emailjs from '@emailjs/browser'
 import { Loader2 } from 'lucide-react'
 import { siteConfig, whatsappHref } from '@/lib/site-config'
@@ -20,7 +20,13 @@ function enquiryMessage(data: FormData) {
 }
 
 export function ContactForm() {
+  const initialService = typeof window !== 'undefined' ? new URLSearchParams(window.location.search).get('service') : null
   const formRef = useRef<HTMLFormElement>(null)
+  useEffect(() => {
+    const service = new URLSearchParams(window.location.search).get('service')
+    const select = document.getElementById('service') as HTMLSelectElement | null
+    if (service && select && siteConfig.services.some((item) => item.slug === service)) select.value = service
+  }, [])
   const [status, setStatus] = useState<Status>('idle')
   const [errors, setErrors] = useState<Errors>({})
   const [fallbackHref, setFallbackHref] = useState('')
@@ -93,9 +99,9 @@ export function ContactForm() {
 
       <div>
         <label htmlFor="service" className={labelClass}>Service</label>
-        <select id="service" name="service" defaultValue="" required aria-invalid={Boolean(errors.service)} aria-describedby={errors.service ? 'service-error' : undefined} className={`${inputClass} contact-form-select`}>
+        <select id="service" name="service" defaultValue={initialService ?? ''} required aria-invalid={Boolean(errors.service)} aria-describedby={errors.service ? 'service-error' : undefined} className={`${inputClass} contact-form-select`}>
           <option value="" disabled>Select a service</option>
-          {siteConfig.services.map((service) => <option key={service.slug} value={service.displayTitle}>{service.displayTitle}</option>)}
+          {siteConfig.services.map((service) => <option key={service.slug} value={service.slug}>{service.displayTitle}</option>)}
         </select>
         {errors.service && <p id="service-error" className="mt-1 text-sm text-destructive">{errors.service}</p>}
       </div>
