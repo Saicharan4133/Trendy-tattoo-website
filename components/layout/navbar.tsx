@@ -53,7 +53,7 @@ export function Navbar() {
           >
             <span className="relative h-7 w-7 shrink-0 overflow-hidden rounded-full border border-gold/40 md:h-8 md:w-8">
               <Image
-                src="/images/logo.jpeg"
+                src={siteConfig.logoImage}
                 alt={`${siteConfig.name} logo`}
                 fill
                 priority

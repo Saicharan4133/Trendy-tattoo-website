@@ -1,4 +1,4 @@
 User-Agent: *
 Allow: /
 
-Sitemap: https://rathnamstudio.in/sitemap.xml
+Sitemap: https://trendy-tattoo-studio.vercel.app/sitemap.xml
