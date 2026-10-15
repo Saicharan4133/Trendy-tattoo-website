@@ -1,14 +1,13 @@
 'use client'
 
-import { useRef, useState, type FormEvent } from 'react'
+import { useEffect, useRef, useState, type FormEvent } from 'react'
 import emailjs from '@emailjs/browser'
 import { Loader2 } from 'lucide-react'
 import { siteConfig, whatsappHref } from '@/lib/site-config'
 
 type Status = 'idle' | 'loading' | 'success' | 'error'
-type Errors = Partial<Record<'name' | 'phone' | 'email' | 'message' | 'service' | 'studio', string>>
+type Errors = Partial<Record<'service' | 'message' | 'name' | 'phone', string>>
 
-const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const phonePattern = /^[+\d][\d\s-]{6,16}$/
 
 function enquiryMessage(data: FormData) {
@@ -16,35 +15,34 @@ function enquiryMessage(data: FormData) {
     `Hi, I would like to enquire about ${String(data.get('service') || 'a studio service')}.`,
     `Name: ${String(data.get('from_name') || '').trim()}`,
     `Phone: ${String(data.get('phone') || '').trim()}`,
-    `Email: ${String(data.get('from_email') || '').trim()}`,
-    `Preferred studio: ${String(data.get('preferred_studio') || 'Not specified').trim()}`,
     `Details: ${String(data.get('message') || '').trim()}`,
   ].join('\n')
 }
 
 export function ContactForm() {
+  const initialService = typeof window !== 'undefined' ? new URLSearchParams(window.location.search).get('service') : null
   const formRef = useRef<HTMLFormElement>(null)
+  useEffect(() => {
+    const service = new URLSearchParams(window.location.search).get('service')
+    const select = document.getElementById('service') as HTMLSelectElement | null
+    if (service && select && siteConfig.services.some((item) => item.slug === service)) select.value = service
+  }, [])
   const [status, setStatus] = useState<Status>('idle')
   const [errors, setErrors] = useState<Errors>({})
   const [fallbackHref, setFallbackHref] = useState('')
 
   function validate(data: FormData): Errors {
     const next: Errors = {}
+    const message = String(data.get('message') || '').trim()
     const name = String(data.get('from_name') || '').trim()
     const phone = String(data.get('phone') || '').trim()
-    const email = String(data.get('from_email') || '').trim()
-    const message = String(data.get('message') || '').trim()
     const service = String(data.get('service') || '').trim()
-    const studio = String(data.get('preferred_studio') || '').trim()
 
+    if (!service) next.service = 'Please choose a service.'
+    if (!message) next.message = 'Please tell us about your idea.'
     if (!name) next.name = 'Please enter your name.'
     if (!phone) next.phone = 'Please enter your phone number.'
     else if (!phonePattern.test(phone)) next.phone = 'Please enter a valid phone number.'
-    if (!email) next.email = 'Please enter your email.'
-    else if (!emailPattern.test(email)) next.email = 'Please enter a valid email address.'
-    if (!message) next.message = 'Please tell us a little about your idea.'
-    if (!service) next.service = 'Please choose a service.'
-    if (!studio) next.studio = 'Please choose a preferred studio.'
 
     return next
   }
@@ -100,6 +98,21 @@ export function ContactForm() {
       </div>
 
       <div>
+        <label htmlFor="service" className={labelClass}>Service</label>
+        <select id="service" name="service" defaultValue={initialService ?? ''} required aria-invalid={Boolean(errors.service)} aria-describedby={errors.service ? 'service-error' : undefined} className={`${inputClass} contact-form-select`}>
+          <option value="" disabled>Select a service</option>
+          {siteConfig.services.map((service) => <option key={service.slug} value={service.slug}>{service.displayTitle}</option>)}
+        </select>
+        {errors.service && <p id="service-error" className="mt-1 text-sm text-destructive">{errors.service}</p>}
+      </div>
+
+      <div>
+        <label htmlFor="message" className={labelClass}>Tell us about your idea</label>
+        <textarea id="message" name="message" rows={4} required aria-invalid={Boolean(errors.message)} aria-describedby={errors.message ? 'message-error' : undefined} className={`${inputClass} resize-none`} />
+        {errors.message && <p id="message-error" className="mt-1 text-sm text-destructive">{errors.message}</p>}
+      </div>
+
+      <div>
         <label htmlFor="from_name" className={labelClass}>Name</label>
         <input id="from_name" name="from_name" type="text" autoComplete="name" aria-invalid={Boolean(errors.name)} aria-describedby={errors.name ? 'from_name-error' : undefined} className={inputClass} />
         {errors.name && <p id="from_name-error" className="mt-1 text-sm text-destructive">{errors.name}</p>}
@@ -111,37 +124,7 @@ export function ContactForm() {
         {errors.phone && <p id="phone-error" className="mt-1 text-sm text-destructive">{errors.phone}</p>}
       </div>
 
-      <div>
-        <label htmlFor="from_email" className={labelClass}>Email</label>
-        <input id="from_email" name="from_email" type="email" autoComplete="email" aria-invalid={Boolean(errors.email)} aria-describedby={errors.email ? 'from_email-error' : undefined} className={inputClass} />
-        {errors.email && <p id="from_email-error" className="mt-1 text-sm text-destructive">{errors.email}</p>}
-      </div>
-
-      <div>
-        <label htmlFor="service" className={labelClass}>Service</label>
-        <select id="service" name="service" defaultValue="" required aria-invalid={Boolean(errors.service)} aria-describedby={errors.service ? 'service-error' : undefined} className={`${inputClass} contact-form-select`}>
-          <option value="" disabled>Select a service</option>
-          {siteConfig.services.map((service) => <option key={service.slug} value={service.displayTitle}>{service.displayTitle}</option>)}
-        </select>
-        {errors.service && <p id="service-error" className="mt-1 text-sm text-destructive">{errors.service}</p>}
-      </div>
-
-      <div>
-        <label htmlFor="preferred_studio" className={labelClass}>Preferred studio</label>
-        <select id="preferred_studio" name="preferred_studio" defaultValue="" required aria-invalid={Boolean(errors.studio)} aria-describedby={errors.studio ? 'studio-error' : undefined} className={`${inputClass} contact-form-select`}>
-          <option value="" disabled>Select a Vijayawada studio</option>
-          {siteConfig.locations.map((location) => <option key={location.slug} value={location.neighborhood}>{location.neighborhood}</option>)}
-        </select>
-        {errors.studio && <p id="studio-error" className="mt-1 text-sm text-destructive">{errors.studio}</p>}
-      </div>
-
-      <div>
-        <label htmlFor="message" className={labelClass}>Tell us about your idea</label>
-        <textarea id="message" name="message" rows={4} aria-invalid={Boolean(errors.message)} aria-describedby={errors.message ? 'message-error' : undefined} className={`${inputClass} resize-none`} />
-        {errors.message && <p id="message-error" className="mt-1 text-sm text-destructive">{errors.message}</p>}
-      </div>
-
-      <button type="submit" disabled={status === 'loading'} className="micro-label mt-2 flex items-center justify-center gap-2 rounded-full border border-gold bg-gold px-8 py-4 text-[#0a0a0a] transition-transform hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-70">
+      <button type="submit" disabled={status === 'loading'} className="action-highlight micro-label mt-2 flex items-center justify-center gap-2 rounded-full border border-gold bg-gold px-8 py-4 text-[#0a0a0a] transition-transform hover:scale-[1.03] active:scale-95 disabled:cursor-not-allowed disabled:opacity-70">
         {status === 'loading' && <Loader2 className="h-4 w-4 animate-spin" />}
         SEND ENQUIRY
       </button>

@@ -73,13 +73,13 @@ export function ImageMarquee({
             const content = (
               <>
                 <Image
-                  src={img.src}
+                  src={img.fullSrc ?? img.src}
                   alt={img.alt}
                   fill
                   priority={isEager}
                   className="object-cover"
-                  sizes="220px"
-                  loading={isEager ? undefined : 'lazy'}
+                  sizes="(min-width: 768px) 208px, 160px"
+                  loading={isEager ? undefined : 'eager'}
                 />
                 {onSelect && (
                   <span className="micro-label absolute inset-0 flex items-center justify-center bg-[#0a0a0a]/0 text-transparent transition-colors hover:bg-[#0a0a0a]/40 hover:text-gold">
