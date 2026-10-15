@@ -35,13 +35,20 @@ export const siteConfig = {
     home: { width: 640, height: 853 }, services: { width: 640, height: 853 }, gallery: { width: 640, height: 853 }, about: { width: 640, height: 853 }, contact: { width: 640, height: 853 },
   },
   homeSupportLine: 'Custom tattoos, piercing, tattoo removal and cover-up, permanent makeup, and scar camouflage in Vijayawada.',
-  contact: { email: 'ajjadasai26@gmail.com' },
+  contact: {
+    email: 'ajjadasai26@gmail.com',
+    emailjs: {
+      serviceId: 'service_so0e9dn',
+      templateId: 'template_coiofvh',
+      publicKey: 'RJZYPHqF3kJENRquj',
+    },
+  },
   analytics: { googleTagManagerId: '' },
   locations: [{
     slug: 'vijayawada', label: 'VIJAYAWADA STUDIO', name: 'Trendy Tattoo & Piercing Studio', neighborhood: 'Bhavanipuram', landmark: 'Swathi Theater',
     line1: 'Swathi Theater, Old Police Station Rd', line2: 'HP Colony, Bhavanipuram', line3: 'Vijayawada, Andhra Pradesh 520012', line4: 'India', postalCode: '520012',
     fullAddress: 'Vijayawada Bhavanipuram Swathi Theater, Old Police Station Rd, HP Colony, Vijayawada, Andhra Pradesh 520012',
-    mapsEmbedUrl: 'https://www.google.com/maps/place/Trendy+Tattoo+%26+Piercing+Studio/', mapsDirectionsUrl: 'https://www.google.com/maps/place/Trendy+Tattoo+%26+Piercing+Studio/',
+    mapsEmbedUrl: 'https://www.google.com/maps?q=Trendy+Tattoo+%26+Piercing+Studio,+Swathi+Theater,+Old+Police+Station+Rd,+Vijayawada,+Andhra+Pradesh+520012&output=embed', mapsDirectionsUrl: 'https://www.google.com/maps/place/Trendy+Tattoo+%26+Piercing+Studio/',
     geo: null as { latitude: number; longitude: number } | null, hours: '9:30 AM to 10:00 PM', openingHoursSpecification: [{ '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'], opens: '09:30', closes: '22:00' }], googleBusinessProfileUrl: 'https://www.google.com/maps/place/Trendy+Tattoo+%26+Piercing+Studio/',
   }],
   services: [
