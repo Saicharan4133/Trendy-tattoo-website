@@ -33,11 +33,11 @@ export function AboutUs() {
             <h2 className="font-display text-6xl tracking-tight text-bone md:text-8xl">{about.name}</h2>
             <div className="mt-10 grid grid-cols-2 gap-6 border-t border-white/15 pt-6">
               <div>
-                <p className="font-display text-4xl text-gold md:text-5xl">5+</p>
+                <p className="font-display text-4xl text-gold md:text-5xl">10+</p>
                 <p className="micro-label mt-2 text-bone/65">Years of experience</p>
               </div>
               <div>
-                <p className="font-display text-4xl text-gold md:text-5xl">500+</p>
+                <p className="font-display text-4xl text-gold md:text-5xl">5000+</p>
                 <p className="micro-label mt-2 text-bone/65">Projects completed</p>
               </div>
             </div>
