@@ -6,7 +6,7 @@ import { Loader2 } from 'lucide-react'
 import { siteConfig, whatsappHref } from '@/lib/site-config'
 
 type Status = 'idle' | 'loading' | 'success' | 'error'
-type Errors = Partial<Record<'name' | 'phone' | 'service', string>>
+type Errors = Partial<Record<'service' | 'message' | 'name' | 'phone', string>>
 
 const phonePattern = /^[+\d][\d\s-]{6,16}$/
 
@@ -15,8 +15,6 @@ function enquiryMessage(data: FormData) {
     `Hi, I would like to enquire about ${String(data.get('service') || 'a studio service')}.`,
     `Name: ${String(data.get('from_name') || '').trim()}`,
     `Phone: ${String(data.get('phone') || '').trim()}`,
-    `Email: ${String(data.get('from_email') || '').trim()}`,
-    `Preferred studio: ${String(data.get('preferred_studio') || 'Not specified').trim()}`,
     `Details: ${String(data.get('message') || '').trim()}`,
   ].join('\n')
 }
@@ -29,11 +27,13 @@ export function ContactForm() {
 
   function validate(data: FormData): Errors {
     const next: Errors = {}
+    const message = String(data.get('message') || '').trim()
     const name = String(data.get('from_name') || '').trim()
     const phone = String(data.get('phone') || '').trim()
     const service = String(data.get('service') || '').trim()
 
     if (!service) next.service = 'Please choose a service.'
+    if (!message) next.message = 'Please tell us about your idea.'
     if (!name) next.name = 'Please enter your name.'
     if (!phone) next.phone = 'Please enter your phone number.'
     else if (!phonePattern.test(phone)) next.phone = 'Please enter a valid phone number.'
@@ -98,6 +98,12 @@ export function ContactForm() {
           {siteConfig.services.map((service) => <option key={service.slug} value={service.displayTitle}>{service.displayTitle}</option>)}
         </select>
         {errors.service && <p id="service-error" className="mt-1 text-sm text-destructive">{errors.service}</p>}
+      </div>
+
+      <div>
+        <label htmlFor="message" className={labelClass}>Tell us about your idea</label>
+        <textarea id="message" name="message" rows={4} required aria-invalid={Boolean(errors.message)} aria-describedby={errors.message ? 'message-error' : undefined} className={`${inputClass} resize-none`} />
+        {errors.message && <p id="message-error" className="mt-1 text-sm text-destructive">{errors.message}</p>}
       </div>
 
       <div>
