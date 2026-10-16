@@ -45,7 +45,9 @@ export default function ContactPage() {
                   <dt className="micro-label mb-1 text-bone/50">Phone</dt>
                   <dd className="flex flex-col gap-1">
                     <a href={siteConfig.phoneHref} data-track-event="click_call" className="text-lg transition-colors hover:text-gold">{siteConfig.phone}</a>
-                    <a href={siteConfig.phoneHref2} data-track-event="click_call" className="text-lg transition-colors hover:text-gold">{siteConfig.phone2}</a>
+                    {siteConfig.phone2 && siteConfig.phoneHref2 ? (
+                      <a href={siteConfig.phoneHref2} data-track-event="click_call" className="text-lg transition-colors hover:text-gold">{siteConfig.phone2}</a>
+                    ) : null}
                   </dd>
                 </div>
                 <div>
