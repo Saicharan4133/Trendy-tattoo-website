@@ -1,6 +1,3 @@
-'use client'
-
-import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import type { CSSProperties } from 'react'
 import { InkBackdrop } from '@/components/realm/ink-backdrop'
@@ -10,16 +7,11 @@ import { services, siteConfig } from '@/lib/site-config'
 const nextSectionImages = services.map((s) => s.image)
 
 const lines = ['WE CREATE', 'TIMELESS', 'TATTOOS THAT', 'TELL YOUR STORY']
-const TattooMachineScene = dynamic(
-  () => import('@/components/home/tattoo-machine-scene').then((mod) => mod.TattooMachineScene),
-  { ssr: false }
-)
 
 export function Hero() {
   return (
     <section className="relative isolate flex min-h-[100svh] w-full items-center overflow-hidden bg-[#0a0a0a]">
       <InkBackdrop mood="home" />
-      <TattooMachineScene />
       <PreloadTrigger images={nextSectionImages} />
 
       <div className="relative z-10 mx-auto w-full max-w-[1600px] px-5 md:px-10">
