@@ -10,7 +10,7 @@ import { preloadImages } from '@/lib/image-preload'
  * approaching — the images passed in are preloaded in the background, so
  * by the time the user actually scrolls there nothing needs to pop in.
  */
-export function usePreloadOnApproach(images: readonly string[], rootMargin = '600px 0px 600px 0px') {
+export function usePreloadOnApproach(images: readonly string[], rootMargin = '300px 0px 300px 0px') {
   const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {

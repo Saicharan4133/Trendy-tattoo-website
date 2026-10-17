@@ -21,8 +21,8 @@ export const siteConfig = {
   instagramUrl: 'https://www.instagram.com/tej_tattooist__/',
   googleBusinessProfileUrl: 'https://www.google.com/maps/place/Trendy+Tattoo+%26+Piercing+Studio/',
   founder: { name: 'Sai Teja', role: 'Owner & lead artist', mainImage: '/images/trendy/about us/owner1.webp', secondaryImage: '/images/trendy/about us/owner2.webp' },
-  logoImage: '/images/trendy/logo.webp',
-  movedLogoImage: '/images/trendy/logo.webp',
+  logoImage: '/images/logo.webp',
+  movedLogoImage: '/images/logo.webp',
   shareImage: '/images/trendy/hero image/home hero image.webp',
   heroImages: {
     home: '/images/trendy/hero image/home hero image.webp',
