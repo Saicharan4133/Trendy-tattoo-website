@@ -35,14 +35,14 @@ export function FeaturedGallery() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="group relative h-[420px] overflow-hidden rounded-sm bg-neutral-900 shadow-2xl shadow-black/30 md:h-[620px] md:[perspective:1200px]"
+            className="relative h-[420px] overflow-hidden rounded-sm bg-neutral-900 md:h-[620px]"
           >
             <Image
               src={featured.src}
               alt={featured.alt}
               fill
               loading="lazy"
-              className="object-cover transition-transform duration-1000 ease-out group-hover:scale-[1.04] group-hover:rotate-[0.5deg]"
+              className="object-cover"
               sizes="(min-width: 768px) 50vw, 100vw"
             />
           </m.div>
@@ -55,7 +55,7 @@ export function FeaturedGallery() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-80px' }}
                 transition={{ duration: 0.7, delay: 0.12 * i, ease: [0.16, 1, 0.3, 1] }}
-                className={`group relative overflow-hidden rounded-sm bg-neutral-900 shadow-xl shadow-black/20 transition-transform duration-500 hover:-translate-y-1 ${i === 0 ? 'col-span-2 h-64 md:h-[298px]' : 'h-56 md:h-[298px]'}`}
+                className={`relative overflow-hidden rounded-sm bg-neutral-900 ${i === 0 ? 'col-span-2 h-64 md:h-[298px]' : 'h-56 md:h-[298px]'}`}
               >
                 <Image
                   src={img.src}

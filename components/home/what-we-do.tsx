@@ -40,7 +40,7 @@ export function WhatWeDo() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: '-100px' }}
                 transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                className="group grid grid-cols-1 items-center gap-6 border-t border-bone/10 py-10 transition-[transform,background-color] duration-500 hover:-translate-y-1 hover:bg-bone/[0.025] md:grid-cols-[auto_1fr_auto_140px] md:gap-10 md:py-14 md:[perspective:1000px]"
+                className="group grid grid-cols-1 items-center gap-6 border-t border-bone/10 py-10 md:grid-cols-[auto_1fr_auto_140px] md:gap-10 md:py-14"
               >
                 <span className="font-display text-3xl text-bone/25 md:text-5xl">{service.number}</span>
 
