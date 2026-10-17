@@ -79,7 +79,7 @@ export function ImageMarquee({
                   priority={isEager}
                   className="object-cover"
                   sizes="(min-width: 768px) 208px, 160px"
-                  loading={isEager ? undefined : 'eager'}
+                  loading={isEager ? undefined : 'lazy'}
                 />
                 {onSelect && (
                   <span className="micro-label absolute inset-0 flex items-center justify-center bg-[#0a0a0a]/0 text-transparent transition-colors hover:bg-[#0a0a0a]/40 hover:text-gold">
