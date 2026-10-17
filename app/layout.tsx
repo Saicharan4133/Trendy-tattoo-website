@@ -10,13 +10,14 @@ import { Navbar } from '@/components/layout/navbar'
 import { SiteFooter } from '@/components/layout/site-footer'
 import { FloatingActions } from '@/components/layout/floating-actions'
 import { RouteTransition } from '@/components/layout/route-transition'
-import { RoutePreloader } from '@/components/layout/route-preloader'
 import { MotionProvider } from '@/components/layout/motion-provider'
-import { SiteEventTracker } from '@/components/analytics/site-event-tracker'
 
 const CustomCursor = dynamic(() =>
-  import('@/components/layout/custom-cursor').then((mod) => mod.CustomCursor)
-)
+  import('@/components/layout/custom-cursor').then((mod) => mod.CustomCursor))
+const RoutePreloader = dynamic(() =>
+  import('@/components/layout/route-preloader').then((mod) => mod.RoutePreloader))
+const SiteEventTracker = dynamic(() =>
+  import('@/components/analytics/site-event-tracker').then((mod) => mod.SiteEventTracker))
 
 const anton = Anton({
   subsets: ['latin'],
