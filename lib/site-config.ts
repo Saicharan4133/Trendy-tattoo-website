@@ -5,7 +5,7 @@ export const siteConfig = {
   shortName: 'TRENDY TATTOO',
   tagline: 'INK YOUR STORY',
   description: 'Trendy Tattoo & Piercing Studio in Vijayawada, led by artist Sai Teja with 10+ years of experience.',
-  url: 'https://trendy-tattoo-studio.vercel.app',
+  url: 'https://trendystudio.in',
   city: 'Vijayawada',
   state: 'Andhra Pradesh',
   country: 'India',
