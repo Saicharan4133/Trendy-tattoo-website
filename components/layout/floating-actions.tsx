@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import { MapPin, Phone } from 'lucide-react'
 import { siteConfig, whatsappHref } from '@/lib/site-config'
 
@@ -12,13 +13,39 @@ function WhatsAppIcon({ className }: { className?: string }) {
 }
 
 export function FloatingActions() {
-  const directionsUrl = siteConfig.locations[0].mapsDirectionsUrl
+  const [isLocationMenuOpen, setIsLocationMenuOpen] = useState(false)
 
   return (
     <nav aria-label="Quick contact actions" className="fixed bottom-5 right-5 z-50 flex flex-col items-end gap-3" style={{ bottom: 'calc(1.25rem + env(safe-area-inset-bottom))' }}>
-      <a href={directionsUrl} target="_blank" rel="noopener noreferrer" aria-label={`Get directions to ${siteConfig.name}`} data-track-event="click_directions" className="flex h-13 w-13 items-center justify-center rounded-full border border-gold/40 bg-[#111111]/90 text-gold shadow-lg backdrop-blur transition-transform duration-200 hover:scale-105 active:scale-95" style={{ height: 52, width: 52 }}>
+      {isLocationMenuOpen ? (
+        <div className="mb-1 flex min-w-64 flex-col gap-1 rounded-sm border border-gold/30 bg-[#111111]/95 p-2 shadow-xl backdrop-blur" aria-label="Choose a studio location">
+          {siteConfig.locations.map((location) => (
+            <a
+              key={location.slug}
+              href={location.mapsDirectionsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-track-event="click_directions"
+              className="flex flex-col rounded-sm px-3 py-2 text-left transition-colors hover:bg-bone/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold"
+              onClick={() => setIsLocationMenuOpen(false)}
+            >
+              <span className="micro-label text-gold">{location.label}</span>
+              <span className="mt-1 text-sm text-bone/75">{location.fullAddress}</span>
+            </a>
+          ))}
+        </div>
+      ) : null}
+      <button
+        type="button"
+        aria-label="Choose a studio location for directions"
+        aria-expanded={isLocationMenuOpen}
+        aria-haspopup="true"
+        onClick={() => setIsLocationMenuOpen((open) => !open)}
+        className="flex h-13 w-13 items-center justify-center rounded-full border border-gold/40 bg-[#111111]/90 text-gold shadow-lg backdrop-blur transition-transform duration-200 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold"
+        style={{ height: 52, width: 52 }}
+      >
         <MapPin className="h-5 w-5" />
-      </a>
+      </button>
       <a href={siteConfig.phoneHref} aria-label={`Call ${siteConfig.name}`} data-track-event="click_call" className="flex h-13 w-13 items-center justify-center rounded-full border border-gold/40 bg-[#111111]/90 text-gold shadow-lg backdrop-blur transition-transform duration-200 hover:scale-105 active:scale-95" style={{ height: 52, width: 52 }}>
         <Phone className="h-5 w-5" />
       </a>
